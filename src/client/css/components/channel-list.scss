@@ -1,0 +1,17 @@
+.channel-item {
+  border: 1px solid #eee;
+  background: #fcfcfc;
+  position: relative;
+  line-height: 30px;
+  padding: 0 10px;
+  cursor: pointer;
+  display: block;
+  color: #333;
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+  > div {
+    display: inline-block;
+    float: right;
+  }
+}

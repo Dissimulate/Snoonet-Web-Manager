@@ -1,0 +1,26 @@
+.sidebar {
+  background: $color-500;
+  vertical-align: top;
+  min-width: 140px;
+  img {
+    width: 100px;
+    margin: 10px auto;
+    display: block;
+    opacity: 0.6;
+  }
+  a {
+    display: block;
+    color: $color-50;
+    margin: 4px 8px;
+    &.sub {
+      margin-left: 16px;
+      opacity: 0.75;
+      &:before {
+        content: "- ";
+      }
+    }
+  }
+  > div {
+    margin: 16px 8px;
+  }
+}

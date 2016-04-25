@@ -1,0 +1,35 @@
+.welcome-update {
+  border: 1px solid #eee;
+  background: #fcfcfc;
+  position: relative;
+  padding: 0px 20px 14px;
+  box-shadow: 0 0 14px 1px rgba(0,0,0,0.03);
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  h4 {
+    font-size: 20px;
+    font-weight: 300;
+  }
+  .date {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    font-size: 16px;
+    color: #bbb;
+  }
+  .author {
+    position: absolute;
+    bottom: 8px;
+    right: 20px;
+    font-size: 12px;
+    color: #666;
+    &:before {
+      content: "- "
+    }
+  }
+  p {
+    text-align: justify;
+    color: #555;
+  }
+}
