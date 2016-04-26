@@ -1,0 +1,35 @@
+.ban-item {
+  td:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.ban-add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 360px;
+  height: 140px;
+  text-align: center;
+  > span {
+    margin: 4px 8px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    color: #aaa;
+  }
+  input, select {
+    padding: 4px 8px;
+    font-size: 15px;
+    width: 190px;
+  }
+  select {
+    width: 210px;
+  }
+  .button {
+    width: 100px;
+  }
+}

@@ -28,16 +28,35 @@ a {
   display: inline-block;
   cursor: pointer;
   text-align: center;
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.rm-button {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  padding: 1px 4px 2px;
+  font-size: 12px;
+  border-radius: 2px;
+  border: 1px solid #eee;
+  color: #999;
 }
 
 .spinner {
   width: 40px;
   height: 40px;
   margin: 0 auto;
-  background-color: $color-600;
+  background-color: transparent;
+  border: 18px solid $color-600;
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
   animation: sk-scaleout 1.0s infinite ease-in-out;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 @-webkit-keyframes sk-scaleout {
@@ -47,6 +66,7 @@ a {
   100% {
     -webkit-transform: scale(1.0);
     opacity: 0;
+    border-width: 0px;
   }
 }
 
@@ -58,6 +78,7 @@ a {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
     opacity: 0;
+    border-width: 0px;
   }
 }
 
@@ -71,7 +92,8 @@ a {
   padding: 20px;
   width: 100%;
   position: relative;
-  > div > .spinner {
+  overflow-y: scroll;
+  > div > .spinner,  > .spinner{
     margin: auto;
     top: 0;
     left: 0;
@@ -79,4 +101,8 @@ a {
     bottom: 0;
     position: absolute;
   }
+}
+
+.top-bar {
+  margin-bottom: 14px;
 }

@@ -1,57 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {browserHistory, Router, Route, Link, IndexRoute} from 'react-router'
+import {browserHistory, Router, Route, Link} from 'react-router'
 
 import Login from './components/login'
+import Welcome from './components/welcome'
+import ChannelView from './components/channel-view'
 import ChannelList from './components/channel-list'
 import ChannelModes from './components/channel-modes'
+import ChannelBans from './components/channel-bans'
+import ChannelBansAdd from './components/channel-bans-add'
+import ChannelFilter from './components/channel-filter'
+import ChannelFilterAdd from './components/channel-filter-add'
 
 import client from './irc'
 
-import 'whatwg-fetch'
-
-class Welcome extends React.Component {
+class Dashboard extends React.Component {
   constructor () {
     super()
 
     this.state = {
-      updates: []
-    }
-  }
-
-  async componentDidMount () {
-    let data = await fetch('/updates')
-    let json = await data.json()
-
-    this.setState({
-      updates: json
-    })
-  }
-
-  render () {
-    return (
-      <div>
-        {this.state.updates.map((update, i) => {
-          return (
-            <div className='welcome-update' key={i}>
-              <h4>{update.title}</h4>
-              <span className='date'>{update.date}</span>
-              <span className='author'>{update.author}</span>
-              <p>{update.body}</p>
-            </div>
-            )
-        })}
-      </div>
-      )
-  }
-}
-
-class Dash extends React.Component {
-  constructor() {
-    super()
-
-    this.state = {
-      content: <div><div className='spinner' /></div>
+      content: <div className='spinner' />
     }
   }
 
@@ -113,6 +81,16 @@ class Dash extends React.Component {
                     to={`/channels/${encodeURIComponent(channel)}/modes`}>
                     Modes
                   </Link>
+                  <Link
+                    className='sub'
+                    to={`/channels/${encodeURIComponent(channel)}/bans`}>
+                    Bans
+                  </Link>
+                  <Link
+                    className='sub'
+                    to={`/channels/${encodeURIComponent(channel)}/filter`}>
+                    Filter
+                  </Link>
                 </span>
               )}
               <Link to='/'>Account</Link>
@@ -132,13 +110,9 @@ class Dash extends React.Component {
 
 class Main extends React.Component {
   render () {
-    return client.user.identified ? <Dash params={this.props.params} children={this.props.children}/> : <Login />
-  }
-}
-
-class ChannelView extends React.Component {
-  render () {
-    return <div>{this.props.params.channel}</div>
+    return client.user.identified
+            ? <Dashboard params={this.props.params} children={this.props.children}/>
+            : <Login />
   }
 }
 
@@ -148,6 +122,10 @@ ReactDOM.render((
       <Route path='/channels' component={ChannelList} />
       <Route path='/channels/:channel' component={ChannelView} />
       <Route path='/channels/:channel/modes' component={ChannelModes} />
+      <Route path='/channels/:channel/bans' component={ChannelBans} />
+      <Route path='/channels/:channel/bans/add' component={ChannelBansAdd} />
+      <Route path='/channels/:channel/filter' component={ChannelFilter} />
+      <Route path='/channels/:channel/filter/add' component={ChannelFilterAdd} />
     </Route>
   </Router>
 ), document.getElementById('app'))

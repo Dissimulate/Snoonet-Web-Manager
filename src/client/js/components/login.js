@@ -24,6 +24,7 @@ export default class Login extends React.Component {
     }, () => {
       client.connect(
         window.location.hostname,
+        // 'cosmos.snoonet.org',
         8080,
         0,
         this.refs.nick.value,

@@ -17,22 +17,40 @@ a {
   display: inline-block;
   cursor: pointer;
   text-align: center; }
+  .button:not(:last-child) {
+    margin-right: 10px; }
+
+.rm-button {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  padding: 1px 4px 2px;
+  font-size: 12px;
+  border-radius: 2px;
+  border: 1px solid #eee;
+  color: #999; }
 
 .spinner {
   width: 40px;
   height: 40px;
   margin: 0 auto;
-  background-color: #3949AB;
+  background-color: transparent;
+  border: 18px solid #3949AB;
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-  animation: sk-scaleout 1.0s infinite ease-in-out; }
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 @-webkit-keyframes sk-scaleout {
   0% {
     -webkit-transform: scale(0); }
   100% {
     -webkit-transform: scale(1);
-    opacity: 0; } }
+    opacity: 0;
+    border-width: 0px; } }
 
 @keyframes sk-scaleout {
   0% {
@@ -41,7 +59,8 @@ a {
   100% {
     -webkit-transform: scale(1);
     transform: scale(1);
-    opacity: 0; } }
+    opacity: 0;
+    border-width: 0px; } }
 
 .main-table {
   height: 100%;
@@ -51,14 +70,46 @@ a {
   vertical-align: top;
   padding: 20px;
   width: 100%;
-  position: relative; }
-  .main-wrapper > div > .spinner {
+  position: relative;
+  overflow-y: scroll; }
+  .main-wrapper > div > .spinner, .main-wrapper > .spinner {
     margin: auto;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     position: absolute; }
+
+.top-bar {
+  margin-bottom: 14px; }
+
+.ban-item td:not(:last-child) {
+  margin-right: 10px; }
+
+.ban-add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 360px;
+  height: 140px;
+  text-align: center; }
+  .ban-add > span {
+    margin: 4px 8px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    color: #aaa; }
+  .ban-add input, .ban-add select {
+    padding: 4px 8px;
+    font-size: 15px;
+    width: 190px; }
+  .ban-add select {
+    width: 210px; }
+  .ban-add .button {
+    width: 100px; }
 
 .channel-item {
   border: 1px solid #eee;
@@ -134,7 +185,8 @@ a {
   .sidebar a {
     display: block;
     color: #E8EAF6;
-    margin: 4px 8px; }
+    margin: 4px 8px;
+    cursor: pointer; }
     .sidebar a.sub {
       margin-left: 16px;
       opacity: 0.75; }

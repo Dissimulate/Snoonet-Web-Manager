@@ -110,7 +110,11 @@
 	  }, {
 	    key: 'send',
 	    value: function send(msg) {
-	      this.socket.write(msg + '\r\n');
+	      if (msg.startsWith('WHO ')) {
+	        this.socket.write('PRIVMSG Sherlock :@ezchan ' + msg + '\r\n');
+	      } else {
+	        this.socket.write(msg + '\r\n');
+	      }
 	    }
 	  }]);
 	  return IRC;
