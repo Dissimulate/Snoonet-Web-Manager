@@ -1,0 +1,20 @@
+.user-item {
+  color: $color-100;
+  span {
+    &:not(:first-child) {
+      margin-left: 2px;
+    }
+    &:not(:last-child) {
+      margin-right: 2px;
+    }
+    &:nth-child(1) {
+      color: $color-500;
+    }
+    &:nth-child(2) {
+      color: $color-300;
+    }
+    &:nth-child(3) {
+      color: $color-300;
+    }
+  }
+}

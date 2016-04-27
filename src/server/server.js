@@ -86,7 +86,7 @@ http.listen(8080, () => {
 })
 
 app.get('/updates', function (req, res) {
-  let json = JSON.parse(fs.readFileSync('updates.json', 'utf8'))
+  let json = JSON.parse(fs.readFileSync('data/updates.json', 'utf8'))
 
   res.send(json)
 })

@@ -151,7 +151,7 @@
 	});
 
 	app.get('/updates', function (req, res) {
-	  var json = JSON.parse(fs.readFileSync('updates.json', 'utf8'));
+	  var json = JSON.parse(fs.readFileSync('data/updates.json', 'utf8'));
 
 	  res.send(json);
 	});

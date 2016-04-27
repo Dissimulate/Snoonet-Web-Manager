@@ -26,7 +26,7 @@ gulp.task('css', () => {
   gulp.src(__app + '/css/**/*.scss')
     .pipe(concat('style.scss'))
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(__build))
+    .pipe(gulp.dest(__build + '/css'))
 })
 
 gulp.task('webserver', () => {
@@ -95,6 +95,9 @@ gulp.task('transpile', () => {
 gulp.task('move', () => {
   gulp.src([__app + '/*.html']).pipe(gulp.dest(__build))
   gulp.src([__app + '/img/*']).pipe(gulp.dest(__build + '/img'))
+  gulp.src([__app + '/css/**/*.css']).pipe(gulp.dest(__build + '/css'))
+  gulp.src([__app + '/fonts/*']).pipe(gulp.dest(__build + '/fonts'))
+  gulp.src([__app + '/data/*']).pipe(gulp.dest(__build + '/data'))
 })
 
 gulp.task('serve', ['webserver'])

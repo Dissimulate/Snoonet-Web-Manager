@@ -24,11 +24,12 @@ a {
   display: inline-block;
   cursor: pointer;
   text-align: center;
-  padding: 1px 4px 2px;
+  padding: 2px 4px;
   font-size: 12px;
   border-radius: 2px;
   border: 1px solid #eee;
-  color: #999; }
+  color: #999;
+  margin-right: 8px; }
 
 .spinner {
   width: 40px;
@@ -138,6 +139,19 @@ a {
   width: 40px;
   width: 78px;
   margin: 0 5px; }
+
+.user-item {
+  color: #C5CAE9; }
+  .user-item span:not(:first-child) {
+    margin-left: 2px; }
+  .user-item span:not(:last-child) {
+    margin-right: 2px; }
+  .user-item span:nth-child(1) {
+    color: #3F51B5; }
+  .user-item span:nth-child(2) {
+    color: #7986CB; }
+  .user-item span:nth-child(3) {
+    color: #7986CB; }
 
 .login-page {
   background: #3F51B5;

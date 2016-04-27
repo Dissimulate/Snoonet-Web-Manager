@@ -93,7 +93,7 @@ export default class ChannelBans extends React.Component {
                       <td>{ban.mask}</td>
                       <td>{ban.setBy}</td>
                       <td>{ban.time}</td>
-                      <td><div onClick={this.remove.bind(this, [ban.mask])} className='rm-button'>✕</div></td>
+                      <td><div onClick={this.remove.bind(this, [ban.mask])} className='rm-button fa fa-ban'></div></td>
                     </tr>
                     )
                 }

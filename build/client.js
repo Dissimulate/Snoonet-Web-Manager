@@ -92,23 +92,27 @@
 
 	var _channelList2 = _interopRequireDefault(_channelList);
 
-	var _channelModes = __webpack_require__(361);
+	var _channelUsers = __webpack_require__(361);
+
+	var _channelUsers2 = _interopRequireDefault(_channelUsers);
+
+	var _channelModes = __webpack_require__(362);
 
 	var _channelModes2 = _interopRequireDefault(_channelModes);
 
-	var _channelBans = __webpack_require__(362);
+	var _channelBans = __webpack_require__(363);
 
 	var _channelBans2 = _interopRequireDefault(_channelBans);
 
-	var _channelBansAdd = __webpack_require__(363);
+	var _channelBansAdd = __webpack_require__(364);
 
 	var _channelBansAdd2 = _interopRequireDefault(_channelBansAdd);
 
-	var _channelFilter = __webpack_require__(364);
+	var _channelFilter = __webpack_require__(365);
 
 	var _channelFilter2 = _interopRequireDefault(_channelFilter);
 
-	var _channelFilterAdd = __webpack_require__(365);
+	var _channelFilterAdd = __webpack_require__(366);
 
 	var _channelFilterAdd2 = _interopRequireDefault(_channelFilterAdd);
 
@@ -212,6 +216,13 @@
 	                  _reactRouter.Link,
 	                  {
 	                    className: 'sub',
+	                    to: '/channels/' + encodeURIComponent(channel) + '/users' },
+	                  'Users'
+	                ),
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    className: 'sub',
 	                    to: '/channels/' + encodeURIComponent(channel) + '/modes' },
 	                  'Modes'
 	                ),
@@ -279,6 +290,7 @@
 	    { path: '/', component: Main },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels', component: _channelList2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel', component: _channelView2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/users', component: _channelUsers2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/modes', component: _channelModes2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/bans', component: _channelBans2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/bans/add', component: _channelBansAdd2.default }),
@@ -36720,58 +36732,20 @@
 
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ChannelView).call(this));
 
-	    _this.state = {
-	      users: []
-	    };
+	    _this.state = {};
 	    return _this;
 	  }
 
 	  (0, _createClass3.default)(ChannelView, [{
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-
-	      var collecting = false;
-	      var str = '';
-
-	      _irc2.default.on('PRIVMSG', function (sender, dest, message) {
-	        if (sender[1] === 'Sherlock') {
-	          if (/WHO \S+/.test(message[0])) {
-	            collecting = true;
-	            str = '';
-	          } else if (message[0] === 'END') {
-	            collecting = false;
-
-	            _this2.setState({
-	              users: str.split('|')
-	            });
-	          } else if (collecting) {
-	            str += message[0];
-	          }
-	        }
-	      });
-
-	      _irc2.default.send('WHO', this.props.params.channel);
-	    }
+	    value: function componentDidMount() {}
 	  }, {
 	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      _irc2.default.removeAllListeners('PRIVMSG');
-	    }
+	    value: function componentWillUnmount() {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        !this.state.users.length ? _react2.default.createElement('div', { className: 'spinner' }) : this.state.users.map(function (user) {
-	          return _react2.default.createElement(
-	            'div',
-	            null,
-	            user
-	          );
-	        })
-	      );
+	      return _react2.default.createElement('div', null);
 	    }
 	  }]);
 	  return ChannelView;
@@ -36951,6 +36925,150 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var ChannelUsers = function (_React$Component) {
+	  (0, _inherits3.default)(ChannelUsers, _React$Component);
+
+	  function ChannelUsers() {
+	    (0, _classCallCheck3.default)(this, ChannelUsers);
+
+	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ChannelUsers).call(this));
+
+	    _this.state = {
+	      users: []
+	    };
+	    return _this;
+	  }
+
+	  (0, _createClass3.default)(ChannelUsers, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      var collecting = false;
+	      var str = '';
+
+	      _irc2.default.on('PRIVMSG', function (sender, dest, message) {
+	        if (sender[1] === 'Sherlock') {
+	          if (/WHO \S+/.test(message[0])) {
+	            collecting = true;
+	            str = '';
+	          } else if (message[0] === 'END') {
+	            collecting = false;
+
+	            _this2.setState({
+	              users: str.split('|').map(function (user) {
+	                return user.split(/[!@]/);
+	              })
+	            });
+	          } else if (collecting) {
+	            str += message[0];
+	          }
+	        }
+	      });
+
+	      this.update();
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {
+	      _irc2.default.send('WHO', this.props.params.channel);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      _irc2.default.removeAllListeners('PRIVMSG');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return !this.state.users.length ? _react2.default.createElement('div', { className: 'spinner' }) : _react2.default.createElement(
+	        'table',
+	        null,
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          this.state.users.map(function (user) {
+	            return _react2.default.createElement(
+	              'tr',
+	              { key: user[0] },
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement('div', { className: 'rm-button fa fa-sign-out' }),
+	                _react2.default.createElement('div', { className: 'rm-button fa fa-ban' })
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                { className: 'user-item' },
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  user[0]
+	                ),
+	                '!',
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  user[1]
+	                ),
+	                '@',
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  user[2]
+	                )
+	              )
+	            );
+	          })
+	        )
+	      );
+	    }
+	  }]);
+	  return ChannelUsers;
+	}(_react2.default.Component);
+
+	exports.default = ChannelUsers;
+
+/***/ },
+/* 362 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(1);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(13);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(14);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(18);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(43);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(50);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _irc = __webpack_require__(275);
+
+	var _irc2 = _interopRequireDefault(_irc);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var ChannelModes = function (_React$Component) {
 	  (0, _inherits3.default)(ChannelModes, _React$Component);
 
@@ -37055,7 +37173,7 @@
 	exports.default = ChannelModes;
 
 /***/ },
-/* 362 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37234,11 +37352,7 @@
 	                  _react2.default.createElement(
 	                    'td',
 	                    null,
-	                    _react2.default.createElement(
-	                      'div',
-	                      { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button' },
-	                      '✕'
-	                    )
+	                    _react2.default.createElement('div', { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button fa fa-ban' })
 	                  )
 	                );
 	              }
@@ -37264,7 +37378,7 @@
 	exports.default = ChannelBans;
 
 /***/ },
-/* 363 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37396,7 +37510,7 @@
 	exports.default = ChannelBansAdd;
 
 /***/ },
-/* 364 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37574,11 +37688,7 @@
 	                  _react2.default.createElement(
 	                    'td',
 	                    null,
-	                    _react2.default.createElement(
-	                      'div',
-	                      { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button' },
-	                      'x'
-	                    )
+	                    _react2.default.createElement('div', { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button fa fa-times' })
 	                  )
 	                );
 	              }
@@ -37604,7 +37714,7 @@
 	exports.default = ChannelFilter;
 
 /***/ },
-/* 365 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

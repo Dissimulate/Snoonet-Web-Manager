@@ -92,7 +92,7 @@ export default class ChannelFilter extends React.Component {
                       <td>{ban.mask}</td>
                       <td>{ban.setBy}</td>
                       <td>{ban.time}</td>
-                      <td><div onClick={this.remove.bind(this, [ban.mask])} className='rm-button'>x</div></td>
+                      <td><div onClick={this.remove.bind(this, [ban.mask])} className='rm-button fa fa-times'></div></td>
                     </tr>
                     )
                 }

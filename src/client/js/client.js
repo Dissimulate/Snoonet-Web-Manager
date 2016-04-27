@@ -6,6 +6,7 @@ import Login from './components/login'
 import Welcome from './components/welcome'
 import ChannelView from './components/channel-view'
 import ChannelList from './components/channel-list'
+import ChannelUsers from './components/channel-users'
 import ChannelModes from './components/channel-modes'
 import ChannelBans from './components/channel-bans'
 import ChannelBansAdd from './components/channel-bans-add'
@@ -78,6 +79,11 @@ class Dashboard extends React.Component {
                 <span>
                   <Link
                     className='sub'
+                    to={`/channels/${encodeURIComponent(channel)}/users`}>
+                    Users
+                  </Link>
+                  <Link
+                    className='sub'
                     to={`/channels/${encodeURIComponent(channel)}/modes`}>
                     Modes
                   </Link>
@@ -121,6 +127,7 @@ ReactDOM.render((
     <Route path='/' component={Main}>
       <Route path='/channels' component={ChannelList} />
       <Route path='/channels/:channel' component={ChannelView} />
+      <Route path='/channels/:channel/users' component={ChannelUsers} />
       <Route path='/channels/:channel/modes' component={ChannelModes} />
       <Route path='/channels/:channel/bans' component={ChannelBans} />
       <Route path='/channels/:channel/bans/add' component={ChannelBansAdd} />
