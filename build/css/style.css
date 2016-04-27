@@ -83,6 +83,11 @@ a {
 
 .top-bar {
   margin-bottom: 14px; }
+  .top-bar input[type="text"] {
+    line-height: 26px;
+    vertical-align: top;
+    padding: 0 8px;
+    font-size: 14px; }
 
 .ban-item td:not(:last-child) {
   margin-right: 10px; }
@@ -111,6 +116,12 @@ a {
     width: 210px; }
   .ban-add .button {
     width: 100px; }
+
+.flags-item input[type="text"] {
+  width: 172px;
+  font-size: 13px;
+  padding: 2px;
+  margin: 0 4px; }
 
 .channel-item {
   border: 1px solid #eee;

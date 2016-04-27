@@ -7,7 +7,8 @@ export default class ChannelUsers extends React.Component {
     super()
 
     this.state = {
-      users: []
+      users: [],
+      search: ''
     }
   }
 
@@ -43,29 +44,43 @@ export default class ChannelUsers extends React.Component {
     client.removeAllListeners('PRIVMSG')
   }
 
+  search (e) {
+    this.setState({
+      search: e.target.value
+    })
+  }
+
   render () {
     return (
       !this.state.users.length
         ? <div className='spinner' />
-        : <table>
-          <tbody>
-            {this.state.users.map((user) => {
-              return (
-                <tr key={user[0]}>
-                  <td>
-                    <div className='rm-button fa fa-sign-out'></div>
-                    <div className='rm-button fa fa-ban'></div>
-                  </td>
-                  <td className='user-item'>
-                    <span>{user[0]}</span>!
-                    <span>{user[1]}</span>@
-                    <span>{user[2]}</span>
-                  </td>
-                </tr>
-                )
-            })}
-          </tbody>
-        </table>
+        : <div>
+          <div className='top-bar'>
+            <input onChange={this.search.bind(this)} type='text' placeholder='search' />
+          </div>
+          <table>
+            <tbody>
+              {this.state.users.map((user) => {
+                let search = this.state.search
+                let match = search ? user[0].includes(search) || user[1].includes(search) || user[2].includes(search) : true
+
+                return match && (
+                  <tr key={user[0]}>
+                    <td>
+                      <div className='rm-button fa fa-sign-out'></div>
+                      <div className='rm-button fa fa-ban'></div>
+                    </td>
+                    <td className='user-item'>
+                      <span>{user[0]}</span>!
+                      <span>{user[1]}</span>@
+                      <span>{user[2]}</span>
+                    </td>
+                  </tr>
+                  )
+              })}
+            </tbody>
+          </table>
+        </div>
       )
   }
 }

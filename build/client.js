@@ -116,6 +116,10 @@
 
 	var _channelFilterAdd2 = _interopRequireDefault(_channelFilterAdd);
 
+	var _channelFlags = __webpack_require__(367);
+
+	var _channelFlags2 = _interopRequireDefault(_channelFlags);
+
 	var _irc = __webpack_require__(275);
 
 	var _irc2 = _interopRequireDefault(_irc);
@@ -239,6 +243,13 @@
 	                    className: 'sub',
 	                    to: '/channels/' + encodeURIComponent(channel) + '/filter' },
 	                  'Filter'
+	                ),
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  {
+	                    className: 'sub',
+	                    to: '/channels/' + encodeURIComponent(channel) + '/flags' },
+	                  'Flags'
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -295,7 +306,8 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/bans', component: _channelBans2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/bans/add', component: _channelBansAdd2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/filter', component: _channelFilter2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/filter/add', component: _channelFilterAdd2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/filter/add', component: _channelFilterAdd2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/channels/:channel/flags', component: _channelFlags2.default })
 	  )
 	), document.getElementById('app'));
 
@@ -36934,7 +36946,8 @@
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ChannelUsers).call(this));
 
 	    _this.state = {
-	      users: []
+	      users: [],
+	      search: ''
 	    };
 	    return _this;
 	  }
@@ -36979,47 +36992,68 @@
 	      _irc2.default.removeAllListeners('PRIVMSG');
 	    }
 	  }, {
+	    key: 'search',
+	    value: function search(e) {
+	      this.setState({
+	        search: e.target.value
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      return !this.state.users.length ? _react2.default.createElement('div', { className: 'spinner' }) : _react2.default.createElement(
-	        'table',
+	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'tbody',
+	          'div',
+	          { className: 'top-bar' },
+	          _react2.default.createElement('input', { onChange: this.search.bind(this), type: 'text', placeholder: 'search' })
+	        ),
+	        _react2.default.createElement(
+	          'table',
 	          null,
-	          this.state.users.map(function (user) {
-	            return _react2.default.createElement(
-	              'tr',
-	              { key: user[0] },
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                _react2.default.createElement('div', { className: 'rm-button fa fa-sign-out' }),
-	                _react2.default.createElement('div', { className: 'rm-button fa fa-ban' })
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                { className: 'user-item' },
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            this.state.users.map(function (user) {
+	              var search = _this3.state.search;
+	              var match = search ? user[0].includes(search) || user[1].includes(search) || user[2].includes(search) : true;
+
+	              return match && _react2.default.createElement(
+	                'tr',
+	                { key: user[0] },
 	                _react2.default.createElement(
-	                  'span',
+	                  'td',
 	                  null,
-	                  user[0]
+	                  _react2.default.createElement('div', { className: 'rm-button fa fa-sign-out' }),
+	                  _react2.default.createElement('div', { className: 'rm-button fa fa-ban' })
 	                ),
-	                '!',
 	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  user[1]
-	                ),
-	                '@',
-	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  user[2]
+	                  'td',
+	                  { className: 'user-item' },
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    user[0]
+	                  ),
+	                  '!',
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    user[1]
+	                  ),
+	                  '@',
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    user[2]
+	                  )
 	                )
-	              )
-	            );
-	          })
+	              );
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -37224,7 +37258,8 @@
 
 	    _this.state = {
 	      bans: [],
-	      masks: []
+	      masks: [],
+	      search: ''
 	    };
 	    return _this;
 	  }
@@ -37295,6 +37330,13 @@
 	      this.remove(this.state.masks);
 	    }
 	  }, {
+	    key: 'search',
+	    value: function search(e) {
+	      this.setState({
+	        search: e.target.value
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -37316,7 +37358,8 @@
 	              to: '/channels/' + encodeURIComponent(this.props.params.channel) + '/bans/add',
 	              className: 'button' },
 	            'Add Ban'
-	          )
+	          ),
+	          _react2.default.createElement('input', { onChange: this.search.bind(this), type: 'text', placeholder: 'search' })
 	        ),
 	        !this.state.bans.length ? _react2.default.createElement('div', { className: 'spinner' }) : _react2.default.createElement(
 	          'table',
@@ -37325,37 +37368,38 @@
 	            'tbody',
 	            null,
 	            this.state.bans.map(function (ban, i) {
-	              if (ban) {
-	                return _react2.default.createElement(
-	                  'tr',
-	                  { key: i, className: 'ban-item' },
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', { onChange: _this3.toggle.bind(_this3, ban.mask), type: 'checkbox' })
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    ban.mask
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    ban.setBy
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    ban.time
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('div', { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button fa fa-ban' })
-	                  )
-	                );
-	              }
+	              var search = _this3.state.search;
+	              var match = search ? ban.mask.includes(search) : true;
+
+	              return ban && match && _react2.default.createElement(
+	                'tr',
+	                { key: i, className: 'ban-item' },
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('input', { onChange: _this3.toggle.bind(_this3, ban.mask), type: 'checkbox' })
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('div', { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button fa fa-times' })
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  ban.mask
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  ban.setBy
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  ban.time
+	                )
+	              );
 
 	              return _react2.default.createElement(
 	                'tr',
@@ -37560,7 +37604,8 @@
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ChannelFilter).call(this));
 
 	    _this.state = {
-	      bans: []
+	      bans: [],
+	      search: ''
 	    };
 	    return _this;
 	  }
@@ -37631,6 +37676,13 @@
 	      this.remove(this.state.masks);
 	    }
 	  }, {
+	    key: 'search',
+	    value: function search(e) {
+	      this.setState({
+	        search: e.target.value
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this3 = this;
@@ -37652,7 +37704,8 @@
 	              to: '/channels/' + encodeURIComponent(this.props.params.channel) + '/filter/add',
 	              className: 'button' },
 	            'Add Filter'
-	          )
+	          ),
+	          _react2.default.createElement('input', { onChange: this.search.bind(this), type: 'text', placeholder: 'search' })
 	        ),
 	        !this.state.bans.length ? _react2.default.createElement('div', { className: 'spinner' }) : _react2.default.createElement(
 	          'table',
@@ -37661,37 +37714,38 @@
 	            'tbody',
 	            null,
 	            this.state.bans.map(function (ban, i) {
-	              if (ban) {
-	                return _react2.default.createElement(
-	                  'tr',
-	                  { key: i, className: 'ban-item' },
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('input', { onChange: _this3.toggle.bind(_this3, ban.mask), type: 'checkbox' })
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    ban.mask
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    ban.setBy
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    ban.time
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    _react2.default.createElement('div', { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button fa fa-times' })
-	                  )
-	                );
-	              }
+	              var search = _this3.state.search;
+	              var match = search ? ban.mask.includes(search) : true;
+
+	              return ban && match && _react2.default.createElement(
+	                'tr',
+	                { key: i, className: 'ban-item' },
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('input', { onChange: _this3.toggle.bind(_this3, ban.mask), type: 'checkbox' })
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('div', { onClick: _this3.remove.bind(_this3, [ban.mask]), className: 'rm-button fa fa-times' })
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  ban.mask
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  ban.setBy
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  ban.time
+	                )
+	              );
 
 	              return _react2.default.createElement(
 	                'tr',
@@ -37814,6 +37868,141 @@
 	}(_react2.default.Component);
 
 	exports.default = ChannelFilterAdd;
+
+/***/ },
+/* 367 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(1);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(13);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(14);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(18);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(43);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(50);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(215);
+
+	var _irc = __webpack_require__(275);
+
+	var _irc2 = _interopRequireDefault(_irc);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ChannelFlags = function (_React$Component) {
+	  (0, _inherits3.default)(ChannelFlags, _React$Component);
+
+	  function ChannelFlags() {
+	    (0, _classCallCheck3.default)(this, ChannelFlags);
+
+	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ChannelFlags).call(this));
+
+	    _this.state = {
+	      flags: []
+	    };
+	    return _this;
+	  }
+
+	  (0, _createClass3.default)(ChannelFlags, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      _irc2.default.on('NOTICE', function (sender, dest, message) {
+	        if (sender[1] === 'ChanServ') {
+	          var match = /^\d+\s*(\S+)\s*(\S+)/.exec(message[0]);
+
+	          if (!match) return;
+
+	          _this2.state.flags.push([match[1], match[2]]);
+
+	          _this2.setState({
+	            flags: _this2.state.flags
+	          });
+	        }
+	      });
+
+	      this.update();
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {
+	      _irc2.default.send('CS FLAGS ' + this.props.params.channel + ' LIST');
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      _irc2.default.removeAllListeners('NOTICE');
+	    }
+	  }, {
+	    key: 'set',
+	    value: function set(nick, flags) {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        !this.state.flags.length ? _react2.default.createElement('div', { className: 'spinner' }) : _react2.default.createElement(
+	          'table',
+	          null,
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            this.state.flags.map(function (user, i) {
+	              return _react2.default.createElement(
+	                'tr',
+	                { className: 'flags-item' },
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  user[0]
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'text', defaultValue: user[1] })
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  _react2.default.createElement('div', { onClick: _this3.set.bind(_this3, user[0], user[1]), className: 'rm-button fa fa-floppy-o' })
+	                )
+	              );
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	  return ChannelFlags;
+	}(_react2.default.Component);
+
+	exports.default = ChannelFlags;
 
 /***/ }
 /******/ ]);

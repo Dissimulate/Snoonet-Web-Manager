@@ -106,4 +106,10 @@ a {
 
 .top-bar {
   margin-bottom: 14px;
+  input[type="text"] {
+    line-height: 26px;
+    vertical-align: top;
+    padding: 0 8px;
+    font-size: 14px;
+  }
 }

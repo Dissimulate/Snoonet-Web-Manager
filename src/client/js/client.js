@@ -12,6 +12,7 @@ import ChannelBans from './components/channel-bans'
 import ChannelBansAdd from './components/channel-bans-add'
 import ChannelFilter from './components/channel-filter'
 import ChannelFilterAdd from './components/channel-filter-add'
+import ChannelFlags from './components/channel-flags'
 
 import client from './irc'
 
@@ -97,6 +98,11 @@ class Dashboard extends React.Component {
                     to={`/channels/${encodeURIComponent(channel)}/filter`}>
                     Filter
                   </Link>
+                  <Link
+                    className='sub'
+                    to={`/channels/${encodeURIComponent(channel)}/flags`}>
+                    Flags
+                  </Link>
                 </span>
               )}
               <Link to='/'>Account</Link>
@@ -133,6 +139,7 @@ ReactDOM.render((
       <Route path='/channels/:channel/bans/add' component={ChannelBansAdd} />
       <Route path='/channels/:channel/filter' component={ChannelFilter} />
       <Route path='/channels/:channel/filter/add' component={ChannelFilterAdd} />
+      <Route path='/channels/:channel/flags' component={ChannelFlags} />
     </Route>
   </Router>
 ), document.getElementById('app'))

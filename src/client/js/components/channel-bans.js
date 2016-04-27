@@ -9,7 +9,8 @@ export default class ChannelBans extends React.Component {
 
     this.state = {
       bans: [],
-      masks: []
+      masks: [],
+      search: ''
     }
   }
 
@@ -70,6 +71,12 @@ export default class ChannelBans extends React.Component {
     this.remove(this.state.masks)
   }
 
+  search (e) {
+    this.setState({
+      search: e.target.value
+    })
+  }
+
   render () {
     return (
       <div>
@@ -80,23 +87,25 @@ export default class ChannelBans extends React.Component {
             className='button'>
             Add Ban
           </Link>
+          <input onChange={this.search.bind(this)} type='text' placeholder='search' />
         </div>
         {!this.state.bans.length
           ? <div className='spinner' />
           : <table>
             <tbody>
               {this.state.bans.map((ban, i) => {
-                if (ban) {
-                  return (
-                    <tr key={i} className='ban-item'>
-                      <td><input onChange={this.toggle.bind(this, ban.mask)} type='checkbox' /></td>
-                      <td>{ban.mask}</td>
-                      <td>{ban.setBy}</td>
-                      <td>{ban.time}</td>
-                      <td><div onClick={this.remove.bind(this, [ban.mask])} className='rm-button fa fa-ban'></div></td>
-                    </tr>
-                    )
-                }
+                let search = this.state.search
+                let match = search ? ban.mask.includes(search) : true
+
+                return ban && match && (
+                  <tr key={i} className='ban-item'>
+                    <td><input onChange={this.toggle.bind(this, ban.mask)} type='checkbox' /></td>
+                    <td><div onClick={this.remove.bind(this, [ban.mask])} className='rm-button fa fa-times'></div></td>
+                    <td>{ban.mask}</td>
+                    <td>{ban.setBy}</td>
+                    <td>{ban.time}</td>
+                  </tr>
+                  )
 
                 return <tr><td>Nothing here.</td></tr>
               })}
