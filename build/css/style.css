@@ -197,6 +197,14 @@ a {
     line-height: 60px;
     color: #C5CAE9;
     font-size: 18px; }
+  .login-page .login-img {
+    height: 24%;
+    opacity: 0.1;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 71px; }
 
 .sidebar {
   background: #3F51B5;

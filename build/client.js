@@ -26665,6 +26665,7 @@
 	          { className: 'login-message' },
 	          this.state.message
 	        ),
+	        _react2.default.createElement('img', { className: 'login-img', src: '/img/snoonet.png' }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'login-box' },

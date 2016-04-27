@@ -86,6 +86,7 @@ export default class Login extends React.Component {
         <div className='login-message'>
           {this.state.message}
         </div>
+        <img className='login-img' src='/img/snoonet.png' />
         <div className='login-box'>
           <input disabled={this.state.loading} ref='nick' placeholder='nickname' type='text' />
           <input disabled={this.state.loading} ref='pass' placeholder='password' type='password' />
