@@ -33,15 +33,15 @@ gulp.task('webserver', () => {
   gulp.src(__build)
     .pipe(webserver({
       fallback: 'index.html',
-      // port: 8001,
+      port: process.env.PORT || 8000,
       host: '0.0.0.0',
       livereload: false,
       directoryListing: false,
-      open: false,
-      proxies: [{
-        source: '/updates',
-        target: 'http://0.0.0.0:8080/updates'
-      }]
+      open: false
+      // proxies: [{
+      //   source: '/updates',
+      //   target: 'http://0.0.0.0:8080/updates'
+      // }]
     }))
 })
 

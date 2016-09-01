@@ -56,11 +56,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var app = __webpack_require__(6)();
-	var http = __webpack_require__(7).Server(app);
-	var io = __webpack_require__(8)(http);
-	var net = __webpack_require__(9);
-	var fs = __webpack_require__(10);
+	var express = __webpack_require__(6);
+	var socket = __webpack_require__(7);
+	var net = __webpack_require__(8);
+	var http = __webpack_require__(9);
+
+	var app = express();
+	var server = http.createServer(app);
+	var io = socket.listen(server);
 
 	/* ----- */
 
@@ -146,14 +149,8 @@
 
 	/* ----- */
 
-	http.listen(8080, function () {
+	server.listen(8080, function () {
 	  console.log('Ezchan server started.');
-	});
-
-	app.get('/updates', function (req, res) {
-	  var json = JSON.parse(fs.readFileSync('data/updates.json', 'utf8'));
-
-	  res.send(json);
 	});
 
 /***/ },
@@ -245,25 +242,19 @@
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = require("http");
+	module.exports = require("socket.io");
 
 /***/ },
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = require("socket.io");
+	module.exports = require("net");
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = require("net");
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	module.exports = require("fs");
+	module.exports = require("http");
 
 /***/ }
 /******/ ]);

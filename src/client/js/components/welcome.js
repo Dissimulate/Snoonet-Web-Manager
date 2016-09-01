@@ -12,7 +12,7 @@ export default class Welcome extends React.Component {
   }
 
   async componentDidMount () {
-    let data = await fetch('/updates')
+    let data = await fetch('/data/updates.json')
     let json = await data.json()
 
     this.setState({

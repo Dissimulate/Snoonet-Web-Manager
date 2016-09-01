@@ -1,10 +1,13 @@
 'use strict'
 
-const app = require('express')()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const express = require('express')
+const socket = require('socket.io')
 const net = require('net')
-const fs = require('fs')
+const http = require('http')
+
+const app = express()
+const server = http.createServer(app)
+const io = socket.listen(server)
 
 /* ----- */
 
@@ -81,12 +84,6 @@ io.on('connection', (socket) => {
 
 /* ----- */
 
-http.listen(8080, () => {
+server.listen(8080, () => {
   console.log('Ezchan server started.')
-})
-
-app.get('/updates', function (req, res) {
-  let json = JSON.parse(fs.readFileSync('data/updates.json', 'utf8'))
-
-  res.send(json)
 })
