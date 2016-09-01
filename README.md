@@ -1,4 +1,4 @@
-# ezchan
+# Snoonet Web Manager
 A channel and account manager for Snoonet.org
 
 1. Install dependencies with `npm install`

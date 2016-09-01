@@ -1,6 +1,6 @@
 [
   {
-    "title": "Welcome to ezchan beta.",
+    "title": "Welcome to Snoonet Web Manager beta.",
     "body": "This is the first version of a web manager to maintain channels and user accounts. The idea is to make the process simpler with a GUI, instead of having to manage everything through commands. Please /msg diss with any feedback, ideas or issues.",
     "date": "25/4/2016",
     "author": "diss"

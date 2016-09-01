@@ -150,7 +150,7 @@
 	/* ----- */
 
 	server.listen(8080, function () {
-	  console.log('Ezchan server started.');
+	  console.log('Server started.');
 	});
 
 /***/ },
